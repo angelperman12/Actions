@@ -1,6 +1,12 @@
 name: Hola Mundo
 
-on: [push]
+##on: [push]
+
+#Evento que se dispara cuando se hace un push a la rama main, también aplica para pull_request
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   hola:
@@ -21,7 +27,21 @@ jobs:
 
   other:
     runs-on: ubuntu-latest
+
+    #Agregar secuencia de ejecución de jobs.
     needs: [Hola]
     steps:
       - name: LS
         run: ls -al
+
+  paquete:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Paquete
+        run: |
+          chmod +x script.sh
+          ./script.sh
